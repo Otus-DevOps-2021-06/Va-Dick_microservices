@@ -10,7 +10,7 @@ Done:
 - Working with Docker Hub
 - Complete tasks with *
 
-##Additional tasks:
+## Additional tasks:
 
 Ansible
 ```
