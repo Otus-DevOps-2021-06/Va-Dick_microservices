@@ -1,0 +1,10 @@
+REPOSITORY                  TAG       IMAGE ID       CREATED              SIZE
+vmartynov/ubuntu-tmp-file   latest    7eb3ae038764   About a minute ago   63.1MB
+ubuntu                      18.04     7d0d8fa37224   6 days ago           63.1MB
+
+
+
+Отличие контейнера от образа:
+Контейнер - это запущенный образ. В нем хранится информация об оспользуемом образе.
+Также, в контейнере присутствуют описания текущего состояния контейнера, его сети,
+его HostConfig, список volums, а также entrypoint контейнера.

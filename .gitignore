@@ -1,0 +1,10 @@
+# for docker-2
+.vagrant
+geerlingguy.docker
+geerlingguy.pip
+variables.json
+.terraform
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
