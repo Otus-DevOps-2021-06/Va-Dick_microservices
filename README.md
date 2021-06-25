@@ -15,7 +15,7 @@ Done:
 Ansible
 ```
 # Installing additional roles
-cd /dockermonolith/infra/ansible && ansible-galaxy install geerlingguy.pip && geerlingguy.docker
+cd /dockermonolith/infra/ansible && ansible-galaxy install geerlingguy.pip && ansible-galaxy install geerlingguy.docker
 ```
 
 Vagrant:
