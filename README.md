@@ -2,8 +2,15 @@
 Va-Dick microservices repository
 
 
+---
+# Docker-2
+Done:
+- Creating a docker host
+- Creating your own image
+- Working with Docker Hub
+- Complete tasks with *
 
-docker-2
+##Additional tasks:
 
 Ansible
 ```
