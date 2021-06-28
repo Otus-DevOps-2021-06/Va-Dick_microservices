@@ -43,11 +43,8 @@ services:
          - comment
 
 volumes:
-  mongodb:
-    name: mongodb_volume
+  mongodb: {}
 
 networks:
-  reddit:
-    name: reddit_network
-  mongodb:
-    name: mongodb_network
+  reddit: {}
+  mongodb: {}
