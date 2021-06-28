@@ -1,0 +1,12 @@
+- name: Configure images for VM
+  hosts: all
+  become: true
+  vars:
+    pip_install_packages:
+      - name: docker
+
+  roles:
+    - python3_pip
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - reddit_in_docker
