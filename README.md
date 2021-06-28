@@ -76,3 +76,16 @@ cd src/comment && docker build -t <your-dockerhub-login>/comment:2.0 -f "Dockerf
 cd src/ui && docker build -t <your-dockerhub-login>/ui:2.0 -f "Dockerfile2" .
 ```
 
+
+
+---
+# Docker-3
+Done:
+
+
+
+
+By default, project name = directory name. You can change it by running the docker-compose command with the flag:
+```
+- p, --project-name NAME
+```
