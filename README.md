@@ -76,3 +76,32 @@ cd src/comment && docker build -t <your-dockerhub-login>/comment:2.0 -f "Dockerf
 cd src/ui && docker build -t <your-dockerhub-login>/ui:2.0 -f "Dockerfile2" .
 ```
 
+
+
+---
+# Docker-3
+Done:
+- Working with networks in Docker;
+- Using docker-compose;
+- Complete tasks with *;
+
+
+## Main task
+By default, project name = directory name. You can change it by running the docker-compose command with the flag:
+```
+- p, --project-name NAME
+```
+
+## Additional tasks:
+- Change the code of each of the applications withoutbuilding the image;
+```
+# The example is located in file "src/docker-compose.override.yml"
+    volumes:
+     - ./${service_name}/:/app/:ro
+```
+
+- Run puma for ruby applications in debug mode with two workers (flags --debug and-w 2).
+```
+# The example is located in file "src/docker-compose.override.yml"
+    command: bash -c "cd /app && puma --debug -w 2"
+```

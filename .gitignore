@@ -8,3 +8,7 @@ variables.json
 terraform.tfstate
 terraform.tfstate.backup
 terraform.tfvars
+
+
+# for docker-4
+.env
