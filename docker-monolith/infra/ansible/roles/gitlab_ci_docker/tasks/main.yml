@@ -1,0 +1,5 @@
+---
+# tasks file for gitlab_ci_docker
+
+- include: gitlab_ci.yml
+- include: gitlab_runner.yml
