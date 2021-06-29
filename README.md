@@ -128,8 +128,8 @@ docker-monolith/infra/ansible/roles
 
 - Launching reddit in a container
 ```
-# Pipeline is located in the directory:
-gitlab-ci
+# Pipeline is located in:
+.gitlab-ci
 ```
 
 - Configuring notifications in Slack:
