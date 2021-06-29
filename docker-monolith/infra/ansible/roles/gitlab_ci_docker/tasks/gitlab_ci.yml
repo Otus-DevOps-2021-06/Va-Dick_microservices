@@ -1,0 +1,39 @@
+---
+# tasks file for gitlab_ci_docker
+
+- name: Create volums directory
+  file:
+    path: /srv/gitlab/config
+    state: directory
+    recurse: yes
+
+- name: Create volums directory
+  file:
+    path: /srv/gitlab/logs
+    state: directory
+    recurse: yes
+
+- name: Create volums directory
+  file:
+    path: /srv/gitlab/data
+    state: directory
+    recurse: yes
+
+- name: Start Gitlab CICD docker container
+  docker_container:
+    container_default_behavior: no_defaults
+    name: gitlab_ci
+    image: 'gitlab/gitlab-ce:latest'
+    state: started
+    restart_policy: always
+    hostname: 'gitlab.example.com'
+    ports:
+      - '80:80'
+      - '443:443'
+      - '2222:22'
+    env:
+      GITLAB_OMNIBUS_CONFIG: external_url "http://{{ external_ip_address }}"
+    volumes:
+      - '/srv/gitlab/config:/etc/gitlab'
+      - '/srv/gitlab/logs:/var/log/gitlab'
+      - '/srv/gitlab/data:/var/opt/gitlab'

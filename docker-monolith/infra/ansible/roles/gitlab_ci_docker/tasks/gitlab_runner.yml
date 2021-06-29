@@ -1,0 +1,25 @@
+---
+# tasks file for gitlab_ci_docker
+
+- name: Create volums directory
+  file:
+    path: /srv/gitlabrunner/config
+    state: directory
+    recurse: yes
+
+- name: Create volums directory
+  file:
+    path: /var/run/
+    state: directory
+    recurse: yes
+
+- name: Start Gitlab runner docker container
+  docker_container:
+    container_default_behavior: no_defaults
+    name: gitlab_runner
+    image: gitlab/gitlab-runner:latest
+    state: started
+    restart_policy: always
+    volumes:
+      - '/srv/gitlabrunner/config:/etc/gitlab-runner'
+      - '/var/run/docker.sock:/var/run/docker.sock'

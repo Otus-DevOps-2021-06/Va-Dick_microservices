@@ -79,7 +79,7 @@ cd src/ui && docker build -t <your-dockerhub-login>/ui:2.0 -f "Dockerfile2" .
 
 
 ---
-# Docker-3
+# Docker-4
 Done:
 - Working with networks in Docker;
 - Using docker-compose;
@@ -89,7 +89,7 @@ Done:
 ## Main task
 By default, project name = directory name. You can change it by running the docker-compose command with the flag:
 ```
-- p, --project-name NAME
+-p, --project-name NAME
 ```
 
 ## Additional tasks:
@@ -105,3 +105,32 @@ By default, project name = directory name. You can change it by running the dock
 # The example is located in file "src/docker-compose.override.yml"
     command: bash -c "cd /app && puma --debug -w 2"
 ```
+
+
+
+---
+# Gitlab-ci-1
+Done:
+- Prepare the Gitlab CI installation;
+- Prepare a repository with the application code;
+- Describe the pipeline stages for the application;
+- Define environments;
+- Complete tasks with *;
+
+## Additional tasks:
+- Automating the deployment of GitLab and worker
+```
+# Ansible playbook is located in the folder:
+docker-monolith/infra/ansible/playbooks
+# The ansible role is located in the folder:
+docker-monolith/infra/ansible/roles
+```
+
+- Launching reddit in a container
+```
+# Pipeline is located in:
+.gitlab-ci
+```
+
+- Configuring notifications in Slack:
+https://devops-team-otus.slack.com/archives/C026PK2SNR2
