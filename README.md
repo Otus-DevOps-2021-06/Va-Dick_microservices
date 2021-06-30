@@ -134,3 +134,18 @@ docker-monolith/infra/ansible/roles
 
 - Configuring notifications in Slack:
 https://devops-team-otus.slack.com/archives/C026PK2SNR2
+
+
+
+---
+# Monitoring-1
+Done:
+- Prometheus: launch, configuration, introduction to the Web UI
+- Monitoring the status of microservices
+- Collecting host metrics using an exporter
+- Complete tasks with *;
+
+## Additional tasks:
+- Add MongoDB monitoring to Prometheus using the required exporter;
+- Add the monitoring of comment, post, ui services to Prometheus using the blackbox exporter;
+- Creating a makefile
