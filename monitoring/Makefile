@@ -58,6 +58,4 @@ cd -
 if [ "$push" == "true" ]; then
     echo "--------------------------------Image push in docker hub registry: "$docker_hub_repo_name"------------------------------------"
     docker push $USER_NAME"/"$image
-else
-    echo "Strings are not equal"
 fi

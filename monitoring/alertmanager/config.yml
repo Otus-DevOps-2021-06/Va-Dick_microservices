@@ -1,0 +1,26 @@
+global:
+  slack_api_url: 'https://hooks.slack.com/services/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'
+
+
+route:
+  receiver: 'slack-notifications'
+  routes:
+    - receiver: 'slack-notifications'
+      continue: true
+
+    - receiver: 'email-notifications'
+      continue: true
+
+receivers:
+- name: 'slack-notifications'
+  slack_configs:
+  - channel: '#vadim_martynov_gitlab_ci'
+
+- name: 'email-notifications'
+  email_configs:
+  - to: 'vmartynov@express42.com'
+    from: 'alertalertmanager@gmail.com'
+    smarthost: smtp.gmail.com:587
+    auth_username: 'alertalertmanager@gmail.com'
+    auth_identity: 'alertalertmanager@gmail.com'
+    auth_password: '<password>'

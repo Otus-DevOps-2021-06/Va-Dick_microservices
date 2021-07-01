@@ -1,0 +1,136 @@
+version: '3.3'
+
+services:
+
+  node-exporter:
+    image: prom/node-exporter:v0.15.2
+    container_name: node-exporter
+    user: root
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    networks:
+      prometheus:
+        aliases:
+         - node-exporter
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+
+  mongodb-exporter:
+    image: bitnami/mongodb-exporter:latest
+    container_name: mongodb-exporter
+    networks:
+      mongodb: {}
+      prometheus:
+        aliases:
+         - mongodb-exporter
+    command:
+     - '--mongodb.uri=exporter_db:27017'
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter:master
+    container_name: blackbox-exporter
+    networks:
+      reddit: {}
+      prometheus:
+        aliases:
+         - blackbox-exporter
+
+  cadvisor:
+    image: google/cadvisor:v0.29.0
+    container_name: cadvisor
+    volumes:
+      - '/:/rootfs:ro'
+      - '/var/run:/var/run:rw'
+      - '/sys:/sys:ro'
+      - '/var/lib/docker/:/var/lib/docker:ro'
+    ports:
+      - '8080:8080'
+    networks:
+      prometheus:
+        aliases:
+         - cadvisor
+
+  telegraf:
+    image: ${USERNAME}/telegraf
+#    image: telegraf:latest
+    container_name: telegraf
+    volumes:
+     - /:/hostfs:ro
+     - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+     - HOST_ETC=/hostfs/etc
+     - HOST_PROC=/hostfs/proc
+     - HOST_SYS=/hostfs/sys
+     - HOST_VAR=/hostfs/var
+     - HOST_RUN=/hostfs/run
+     - HOST_MOUNT_PREFIX=/hostfs
+    networks:
+      prometheus:
+        aliases:
+         - telegraf
+
+  prometheus:
+    image: ${USERNAME}/prometheus
+    container_name: prometheus
+    ports:
+     - '9090:9090'
+    networks:
+      default: {}
+      reddit: {}
+      prometheus:
+        aliases:
+         - prometheus
+    volumes:
+     - prometheus_data:/prometheus
+    command:
+     - '--config.file=/etc/prometheus/prometheus.yml'
+     - '--storage.tsdb.path=/prometheus'
+     - '--storage.tsdb.retention=1d'
+
+  alertmanager:
+    image: ${USERNAME}/alertmanager:latest
+    container_name: alertmanager
+    command:
+     - '--config.file=/etc/alertmanager/config.yml'
+    ports:
+     - 9093:9093
+    networks:
+      prometheus:
+        aliases:
+         - alertmanager
+
+  grafana:
+#    image: grafana/grafana:5.0.0
+    image: ${USERNAME}/grafana
+    container_name: grafana
+#    volumes:
+#     - grafana_data:/var/lib/grafana
+    environment:
+     - DS_PROMETHEUS_SERVER='Prometheus Server'
+     - GF_SECURITY_ADMIN_USER=admin
+     - GF_SECURITY_ADMIN_PASSWORD=secret
+    depends_on:
+     - prometheus
+    ports:
+     - 3000:3000
+    networks:
+     - prometheus
+
+volumes:
+  prometheus_data: {}
+#  grafana_data: {}
+
+networks:
+  reddit:  
+    name: reddit-network
+    external: true
+  mongodb:
+    name: mongodb-network
+    external: true
+  prometheus:
+    name: prometheus-network
+    external: false
