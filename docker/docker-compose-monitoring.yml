@@ -126,11 +126,11 @@ volumes:
 
 networks:
   reddit:  
-    name: reddit-network
-    external: true
+#    name: reddit-network
+#    external: true
   mongodb:
-    name: mongodb-network
+#    name: mongodb-network
     external: true
   prometheus:
-    name: prometheus-network
+#    name: prometheus-network
     external: false

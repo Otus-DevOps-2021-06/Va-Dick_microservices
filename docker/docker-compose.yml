@@ -46,6 +46,6 @@ volumes:
 
 networks:
   mongodb:
-    name: mongodb-network
+#    name: mongodb-network
   reddit:  
-    name: reddit-network
+#    name: reddit-network
