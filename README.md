@@ -229,7 +229,7 @@ $ cat ./monitoring/prometheus/alerts.yml
         description: '{{ $labels.instance }} of job {{ $labels.job }} sent a response with an error code {{ $labels.http_status }}, path {{ $labels.path }}'
         summary: 'Instance {{ $labels.instance }} sent a response with an error code {{ $labels.http_status }}, path {{ $labels.path }}'
 
-# For bilding, use command:
+# Use the command to build::
  ./monitoring/Makefile -i prometheus -p false
 ```
 
@@ -272,4 +272,11 @@ Datasource named ${DS_PROMETHEUS} was not found
 # or
 Datasource named ${DS_PROMETHEUS_SERVER} was not found
 ```
-This error occurs due to the presence of substitution of the datasource value in dashboards through the environment variable. This error does not appear when importing dashboards, but occurs when trying to add a dashboard to an automatic build
+This error occurs due to the presence of substitution of the datasource value in dashboards through the environment variable. This error does not appear when importing dashboards, but occurs when trying to add a dashboard to an automatic build.
+For the solution, these variables have been changed.
+
+Use the command to build:
+```
+ ./monitoring/Makefile -i grafana -p false
+```
+
