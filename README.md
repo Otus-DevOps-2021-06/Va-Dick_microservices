@@ -257,7 +257,7 @@ receivers:
 
 - name: 'email-notifications'
   email_configs:
-  - to: 'vmartynov@express42.com'
+  - to: 'me@gmail.com'
     from: 'alertalertmanager@gmail.com'
     smarthost: smtp.gmail.com:587
     auth_username: 'alertalertmanager@gmail.com'
