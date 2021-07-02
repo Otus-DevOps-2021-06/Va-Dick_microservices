@@ -280,3 +280,42 @@ Use the command to build:
  ./monitoring/Makefile -i grafana -p false
 ```
 
+
+
+---
+# Logging-1
+Done:
+- Preparation of the environment;
+- Logging of Docker containers;
+- Collecting unstructured logs;
+- Visualization of logs;
+- Collecting structured logs;
+- Distributed tracking;
+- Complete tasks with *.
+
+
+## Additional tasks:
+- Finish parsing logs in Fluent:
+```
+<filter service.ui>
+  @type parser
+  format grok
+  <grok>
+    pattern service=%{WORD:service} \| event=%{WORD:event} \| request_id=%{GREEDYDATA:request_id} \| message='%{GREEDYDATA:message}'
+  </grok>
+  <grok>
+    pattern service=%{WORD:service} \| event=%{WORD:event} \| path=%{URIPATH:path} \| request_id=%{GREEDYDATA:request_id} \| remote_addr=%{IP:remote_addr} \| method=%{SPACE}%{WORD:method} \| response_status=%{INT:response_status:integer}
+  </grok>
+  key_name message
+  reserve_data true
+</filter>
+```
+
+- Troubleshooting:
+
+  - [In the first error](https://github.com/Artemmkin/bugged-code/blob/master/post-py/post_app.py#L53), two different types are added together. You need to fix it on:
+      ```
+      body = b'\x0c\x00\x00\x00\x01' + encoded_span
+      ```
+  - In the second error, you need to delete [this line](https://github.com/Artemmkin/bugged-code/blob/master/post-py/post_app.py#L167).
+

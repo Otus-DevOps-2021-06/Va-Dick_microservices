@@ -107,8 +107,8 @@ services:
 #    image: grafana/grafana:5.0.0
     image: ${USERNAME}/grafana
     container_name: grafana
-#    volumes:
-#     - grafana_data:/var/lib/grafana
+    volumes:
+     - grafana_data:/var/lib/grafana
     environment:
      - DS_PROMETHEUS_SERVER='Prometheus Server'
      - GF_SECURITY_ADMIN_USER=admin
@@ -122,7 +122,7 @@ services:
 
 volumes:
   prometheus_data: {}
-#  grafana_data: {}
+  grafana_data: {}
 
 networks:
   reddit:  
