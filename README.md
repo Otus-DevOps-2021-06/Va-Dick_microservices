@@ -149,3 +149,134 @@ Done:
 - Add MongoDB monitoring to Prometheus using the required exporter;
 - Add the monitoring of comment, post, ui services to Prometheus using the blackbox exporter;
 - Creating a makefile
+
+
+
+
+
+---
+# Monitoring-2
+Done:
+- Monitoring of Docker containers;
+- Visualization of metrics;
+- Collection of application performance metrics and business metrics;
+- Setting up and checking the alert;
+- Complete tasks with *.
+
+## Additional tasks:
+- Create a Makefile;
+
+- Collecting metrics from the docker daemon;
+```
+# To configure the Docker daemon as a Prometheus target, you need to specify the metrics-address
+$ cat /etc/docker/daemon.json
+{
+  "metrics-addr" : "10.128.0.28:9323",
+  "experimental" : true
+}
+# You must also restart the daemon:
+sudo systemctl restart docker
+
+# To get metrics, you must also specify the local address in the file:
+$ cat ./monitoring/prometheus/prometheus.yml
+...
+  - job_name: 'docker'
+    static_configs:
+      - targets:
+        - '10.128.0.28:9323'
+...
+
+# Rebuild the image:
+ ./monitoring/Makefile -i prometheus -p false
+```
+
+- Collecting metrics from the Docker daemon using Telegraf:
+```
+# A configuration file was created to collect metrics
+$ cat ./monitoring/telegraf/telegraf.conf
+[[inputs.docker]]
+  endpoint = "unix:///var/run/docker.sock"
+  gather_services = false
+  source_tag = false
+  container_name_include = []
+  container_name_exclude = []
+  container_state_include = ["created", "restarting", "running", "removing", "paused", "exited", "dead"]
+  timeout = "5s"
+  perdevice = false
+  perdevice_include = ["cpu"]
+  total = true
+  total_include = ["cpu", "blkio", "network"]
+  docker_label_include = []
+  docker_label_exclude = []
+
+[[outputs.prometheus_client]]
+  listen = ":9273"
+
+# To build an image, use the command:
+ ..monitoring/Makefile -i telegraf -p false
+```
+
+- Implementation of other alerts:
+```
+# Example of adding a second alert:
+$ cat ./monitoring/prometheus/alerts.yml
+    - alert: HttpRequestsErrorStatusCode
+      expr: rate(ui_request_count{http_status=~"^[45].*"}[1m]) > 0
+      for: 1m
+      labels:
+        severity: page
+      annotations:
+        description: '{{ $labels.instance }} of job {{ $labels.job }} sent a response with an error code {{ $labels.http_status }}, path {{ $labels.path }}'
+        summary: 'Instance {{ $labels.instance }} sent a response with an error code {{ $labels.http_status }}, path {{ $labels.path }}'
+
+# Use the command to build::
+ ./monitoring/Makefile -i prometheus -p false
+```
+
+
+- Configuring the integration of Alertmanager with e-mail:
+```
+$ cat ./monitoring/alertmanager/config.yml
+global:
+  slack_api_url: 'https://hooks.slack.com/services/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'
+
+
+route:
+  receiver: 'slack-notifications'
+  routes:
+    - receiver: 'slack-notifications'
+      continue: true
+
+    - receiver: 'email-notifications'
+      continue: true
+
+receivers:
+- name: 'slack-notifications'
+  slack_configs:
+  - channel: '#vadim_martynov_gitlab_ci'
+
+- name: 'email-notifications'
+  email_configs:
+  - to: 'vmartynov@express42.com'
+    from: 'alertalertmanager@gmail.com'
+    smarthost: smtp.gmail.com:587
+    auth_username: 'alertalertmanager@gmail.com'
+    auth_identity: 'alertalertmanager@gmail.com'
+    auth_password: '<password>'
+```
+
+- Implementation of automatic addition of the data source and created dashboards to the graphana:
+An error occurs after the image is built:
+```
+Datasource named ${DS_PROMETHEUS} was not found
+# or
+Datasource named ${DS_PROMETHEUS_SERVER} was not found
+```
+This error occurs due to the presence of substitution of the datasource value in dashboards through the environment variable. This error does not appear when importing dashboards, but occurs when trying to add a dashboard to an automatic build.
+For the solution, these variables have been changed.
+
+Use the command to build:
+```
+ ./monitoring/Makefile -i grafana -p false
+```
+

@@ -1,42 +1,6 @@
 version: '3.3'
 
 services:
-
-  node-exporter:
-    image: prom/node-exporter:v0.15.2
-    user: root
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    networks:
-      - prometheus
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
-
-  mongodb-exporter:
-    image: bitnami/mongodb-exporter:latest
-    container_name: mongodb-exporter
-    networks:
-     - mongodb
-     - prometheus
-    command:
-     - '--mongodb.uri=exporter_db:27017'
-
-  blackbox-exporter:
-#    image: vadimrepo/blackbox-exporter
-    image: prom/blackbox-exporter:master
-    container_name: blackbox-exporter
-    networks:
-      reddit: {}
-      prometheus:
-        aliases:
-         - blackbox-exporter
-#    command:
-#     - '--config.file=/config/blackbox.yml'
-
   mongodb:
     image: mongo:${mongodb_v}
     container_name: reddit-mongodb
@@ -55,7 +19,9 @@ services:
     ports:
      - ${ui_port}:9292/tcp
     networks:
-     - reddit
+      reddit:
+        aliases:
+         - ui
 
   post:
     image: ${USERNAME}/post:${post_v}
@@ -75,25 +41,11 @@ services:
         aliases:
          - comment
 
-  prometheus:
-    image: ${USERNAME}/prometheus
-    ports:
-     - '9090:9090'
-    networks:
-     - reddit
-     - prometheus
-    volumes:
-     - prometheus_data:/prometheus
-    command:
-     - '--config.file=/etc/prometheus/prometheus.yml'
-     - '--storage.tsdb.path=/prometheus'
-     - '--storage.tsdb.retention=1d'
-
 volumes:
   mongodb: {}
-  prometheus_data: {}
 
 networks:
-  reddit: {}
-  mongodb: {}
-  prometheus: {}
+  mongodb:
+#    name: mongodb-network
+  reddit:  
+#    name: reddit-network
