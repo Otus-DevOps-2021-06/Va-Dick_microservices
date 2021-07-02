@@ -18,23 +18,40 @@ services:
     container_name: reddit-ui
     ports:
      - ${ui_port}:9292/tcp
+    environment:
+     - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     networks:
       reddit:
         aliases:
          - ui
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.ui
 
   post:
     image: ${USERNAME}/post:${post_v}
     container_name: reddit-post
+    environment:
+     - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     networks:
       mongodb: {}
       reddit:
         aliases:
          - post
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.post
+
 
   comment:
     image: ${USERNAME}/comment:${comment_v}
     container_name: reddit-comment
+    environment:
+     - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     networks:
       mongodb: {}
       reddit:
