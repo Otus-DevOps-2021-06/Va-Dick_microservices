@@ -312,10 +312,10 @@ Done:
 ```
 
 - Troubleshooting:
-[In the first error](https://github.com/Artemmkin/bugged-code/blob/master/post-py/post_app.py#L53), two different types are added together. You need to fix it on:
-```
-body = b'\x0c\x00\x00\x00\x01' + encoded_span
-```
-In the second error, you need to delete this [line](https://github.com/Artemmkin/bugged-code/blob/master/post-py/post_app.py#L167).
 
+  - [In the first error](https://github.com/Artemmkin/bugged-code/blob/master/post-py/post_app.py#L53), two different types are added together. You need to fix it on:
+      ```
+      body = b'\x0c\x00\x00\x00\x01' + encoded_span
+      ```
+  - In the second error, you need to delete [this line](https://github.com/Artemmkin/bugged-code/blob/master/post-py/post_app.py#L167).
 
