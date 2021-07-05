@@ -1,0 +1,47 @@
+---
+# tasks file for kubernetes
+
+- name: Run apt-get update
+  apt:
+    update_cache: yes
+
+- name: Install packages needed to use the Kubernetes apt repository
+  apt:
+    pkg:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    state: "present"
+    update_cache: true
+    install_recommends: true
+
+- name: Download the Google Cloud public signing key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    keyring: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+
+
+- name: Add the Kubernetes apt repository
+  apt_repository:
+    repo: deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+  notify:
+  - apt-get update
+
+
+- name: Install kubelet and kubeadm
+  apt:
+    pkg:
+    - kubelet
+    - kubeadm
+    state: "present"
+    update_cache: true
+    install_recommends: true
+
+- name: Hold packages
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop:
+    - kubelet
+    - kubeadm

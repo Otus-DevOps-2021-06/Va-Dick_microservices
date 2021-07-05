@@ -1,0 +1,46 @@
+- name: Preparation and installing docker, kubelet and kubeadm
+  hosts:
+    - master
+    - worker
+  become: true
+  vars:
+    pip_install_packages:
+      - name: docker
+  roles:
+    - python3
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - preparing_for_kubernetes
+
+- name: Install kubectl in master
+  hosts: master
+  become: true
+  vars:
+    pod_network_cidr: "10.244.0.0/16"
+  roles:
+    - install_kubectl_in_master
+
+- name: Join workers to claster
+  hosts:
+    - master
+    - worker
+  become: true
+  roles:
+    - join_worker
+
+- name: Install calico in kubectl
+  hosts: master
+  become: true
+  vars:
+    pod_network_cidr: "10.244.0.0/16"
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  roles:
+    - install_calico_in_kubernetes
+
+- name: Init kubeadm for user manipulation
+  hosts: master
+  become: yes
+  become_method: sudo
+  roles:
+    - init_kubeadm_for_user

@@ -1,0 +1,21 @@
+---
+# tasks file for init_kubeadm_for_user
+
+- name: Get the username
+  become: false
+  shell: command whoami
+  register: username_on_the_host
+
+- name: mkdir -p $HOME/.kube
+  file:
+    path: /home/{{ username_on_the_host.stdout }}/.kube/
+    state: directory
+    recurse: yes
+
+- name: cp /etc/kubernetes/admin.conf /home/{{ username_on_the_host.stdout }}/.kube/config
+  copy:
+    remote_src: true
+    src: /etc/kubernetes/admin.conf
+    dest: /home/{{ username_on_the_host.stdout }}/.kube/config
+    owner: "{{ username_on_the_host.stdout }}"
+    group: "{{ username_on_the_host.stdout }}"

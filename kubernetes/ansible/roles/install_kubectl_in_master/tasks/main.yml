@@ -1,0 +1,23 @@
+---
+# tasks file for kubectl_and_join
+- name: Run apt-get update
+  apt:
+    update_cache: yes
+    
+- name: Install kubectl
+  apt:
+    pkg:
+    - kubectl
+    state: "present"
+    update_cache: true
+    install_recommends: true
+
+- name: Hold packages
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop:
+    - kubectl
+
+- name: Kubeadm init
+  shell: kubeadm init --apiserver-cert-extra-sans="{{ ansible_host }}" --apiserver-advertise-address=0.0.0.0 --control-plane-endpoint="{{ ansible_host }}" --pod-network-cidr="{{ pod_network_cidr }}"
