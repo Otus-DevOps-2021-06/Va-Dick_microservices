@@ -355,7 +355,7 @@ Done:
   python3 ./main.py --sa-json-path="/path/to/Yandex Cloud/key.json" --folder-id <folder-id> --list
   ```
 
-  Creating a kubernetus cluster:
+  Creating kubernetus cluster:
   ```
   ansible-playbook ./playbooks/kubernetes_claster.yml
   ```
