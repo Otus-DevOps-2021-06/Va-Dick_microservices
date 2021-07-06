@@ -360,3 +360,31 @@ Done:
   ansible-playbook ./playbooks/kubernetes_claster.yml
   ```
   
+
+
+
+---
+# Kubernetes-2
+Done:
+- Deploy a local environment to work with Kubernetes;
+- Deploy Kubernetes in Yandex Cloud;
+- Launch the reddit app in Kubernetes;
+- Complete tasks with *.
+
+
+## Additional tasks:
+- Deploy the Kubernetes cluster in Yandex cloud using the Terraform module:
+  Before you start, you need to edit the file ```kubernetes/terraform_k8s/stage/terraform.tfvars.example```
+
+  ```
+  cd kubernetes/terraform_k8s/stage/
+  cp terraform.tfvars.example terraform.tfvars
+
+  # Creating Virtual machines:
+
+  cd kubernetes/terraform_k8s/stage/
+  terraform init
+  terraform plan
+  terraform apply -auto-approve
+  ```
+
