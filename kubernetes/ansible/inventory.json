@@ -1,0 +1,16 @@
+{
+    "master": {
+        "hosts": {
+            "kubernetes-master-stage": {
+                "ansible_host": "217.28.230.106"
+            }
+        }
+    },
+    "worker": {
+        "hosts": {
+            "kubernetes-worker-stage-0": {
+                "ansible_host": "217.28.230.227"
+            }
+        }
+    }
+}

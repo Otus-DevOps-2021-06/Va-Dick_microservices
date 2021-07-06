@@ -1,0 +1,12 @@
+---
+# tasks file for kubernetes_calico
+
+- name: Copy file calico.yaml
+  template:
+    src: calico.j2
+    dest: /tmp/calico.yaml
+    owner: root
+    group: root
+
+- name: kubernetes apply -f calico
+  shell: kubectl apply -f /tmp/calico.yaml

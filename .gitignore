@@ -12,3 +12,13 @@ terraform.tfvars
 
 # for docker-4
 .env
+
+
+# for kubernetes-1
+**/variables.json
+*.tfstate
+*.tfstate.*.backup
+*.tfstate.backup
+*.tfvars
+.terraform/
+

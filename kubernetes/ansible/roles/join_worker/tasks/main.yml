@@ -1,0 +1,17 @@
+---
+# tasks file for kubernetes_join
+
+- name: Create join command
+  shell: kubeadm token create --print-join-command
+  register: join_command_list
+  when: (inventory_hostname in groups['master']) and
+        (join_command_list is not defined)
+
+- name: Set join command into the variable
+  set_fact:
+    join_command: "{{ hostvars[groups['master'][0]].join_command_list.stdout_lines[0] }}"
+
+
+- name: Join worker into the claster
+  shell: "{{ join_command }}"
+  when: inventory_hostname not in groups['master']

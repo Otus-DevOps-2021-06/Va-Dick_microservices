@@ -319,3 +319,44 @@ Done:
       ```
   - In the second error, you need to delete [this line](https://github.com/Artemmkin/bugged-code/blob/master/post-py/post_app.py#L167).
 
+---
+# Kubernetes-1
+Done:
+- Manually deploy kubernet components;
+- Install calico;
+- Complete tasks with *.
+
+
+## Additional tasks:
+- Create modules in terraform, for creating virtual machines in yandex. cloud:
+  Before you start, you need to edit the file ```kubernetes/terraform/stage/terraform.tfvars.example```
+
+  ```
+  cd kubernetes/terraform/stage/
+  cp terraform.tfvars.example terraform.tfvars
+
+  # Creating Virtual machines:
+
+  cd kubernetes/terraform/stage/
+  terraform init
+  terraform plan
+  terraform apply -auto-approve
+  ```
+
+- Creating ansible playbook:
+  Before you start, you need to download the roles:
+  ```
+  cd ./kubernetes/ansible && ansible-galaxy install geerlingguy.pip && ansible-galaxy install geerlingguy.docker
+  ```
+
+  After that, you need to create an inventory file:
+  ```
+  cd ./kubernetes/ansible
+  python3 ./main.py --sa-json-path="/path/to/Yandex Cloud/key.json" --folder-id <folder-id> --list
+  ```
+
+  Creating kubernetus cluster:
+  ```
+  ansible-playbook ./playbooks/kubernetes_claster.yml
+  ```
+  
