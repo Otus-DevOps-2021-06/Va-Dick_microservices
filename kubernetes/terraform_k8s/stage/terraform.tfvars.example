@@ -1,0 +1,8 @@
+cloud_id                 = "<cloud_id>"
+folder_id                = "<folder_id>"
+ssh_user                 = "ubuntu"
+public_key_path          = "~/.ssh/id_rsa.pub"
+service_account_key_file = "/path/to/yandex_cloud_key.json"
+zone                     = "ru-central1-a"
+deploy_type              = "stage"
+number_of_nodes          = "2"
