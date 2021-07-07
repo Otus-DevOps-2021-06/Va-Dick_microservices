@@ -388,3 +388,20 @@ Done:
   terraform apply -auto-approve
   ```
 
+
+---
+# Kubernetes-3
+Done:
+- Completed the task with the Ingress Controller;
+- Completed the task with Ingress;
+- Completed the task with Secret;
+- Completed the task with TLS;
+- Completed the task with LoadBalancer Service;
+- Completed the task with Network Policies;
+- Completed the task with Persistent Volume s;
+- Completed the task with PersistentVolumeClaims;
+- Complete tasks with *.
+
+
+## Additional tasks:
+- Described the Secret object being created in the form of a Kubernetes manifest;

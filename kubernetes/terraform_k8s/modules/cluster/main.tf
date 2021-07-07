@@ -9,6 +9,7 @@ terraform {
 resource "yandex_kubernetes_cluster" "cluster" {
   name        = "cluster-${var.deploy_type}"
   description = "cluster"
+  network_policy_provider = "CALICO"
 
   network_id = var.network_id
 
