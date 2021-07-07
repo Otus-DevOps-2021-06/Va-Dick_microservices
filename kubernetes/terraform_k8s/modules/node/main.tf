@@ -29,7 +29,7 @@ resource "yandex_kubernetes_node_group" "node_group" {
     }
 
     boot_disk {
-      type = "network-ssd"
+      type = "network-hdd"
       size = 64
     }
 
