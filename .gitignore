@@ -22,3 +22,5 @@ terraform.tfvars
 *.tfvars
 .terraform/
 
+#for kubernetes-2
+*Gitlab_ci
