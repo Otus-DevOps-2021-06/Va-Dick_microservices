@@ -405,3 +405,36 @@ Done:
 
 ## Additional tasks:
 - Described the Secret object being created in the form of a Kubernetes manifest;
+
+
+
+---
+# Kubernetes-4
+Done:
+- Working with Helm;
+- Deploying Gitlab in Kubernetes;
+- Launching the CI/CD pipeline in Kubernetes;
+- Complete tasks with *.
+
+
+## Additional tasks:
+- Using helm 3;
+- Add trigger for ui, post and comment to run reddit-deploy pipeline:
+  ```yml
+  # To start a trigger, you need to create it, and add the following lines to the pipeline in which the trigger will be called:
+
+  trigger_build:
+  stage: deploy
+  only:
+    refs:
+      - master
+  before_script:
+    - apk add -U openssl curl
+  script:
+    - echo "Triggered reddit-deploy master"
+    - echo "curl -X POST -F token=REDDIT_TRIGGER_TOKEN -F ref=master http://gitlab-gitlab/api/v4/projects/1/trigger/pipeline"
+    - "curl -X POST -F token=$REDDIT_TRIGGER_TOKEN -F ref=master http://gitlab-gitlab/api/v4/projects/1/trigger/pipeline"
+
+  # This trigger will be triggered only from the master branch.
+  ```
+

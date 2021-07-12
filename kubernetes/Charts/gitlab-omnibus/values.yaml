@@ -43,7 +43,7 @@ gitlabConfigAccessMode: ReadWriteOnce
 #gitlabConfigStorageSize: 1Gi
 gitlabRunnerImage: gitlab/gitlab-runner:alpine-v10.1.0
 # Valid values for provider are `gke` for Google Container Engine. Leaving it blank (or any othervalue) will disable fast disk options.
-provider: gke
+provider: yc
 
 ## Storage Class Options
 ## If defined, volume.beta.kubernetes.io/storage-class: <storageClass>
