@@ -438,3 +438,51 @@ Done:
   # This trigger will be triggered only from the master branch.
   ```
 
+
+---
+# Kubernetes-5
+Done:
+- Deployment Prometheus in k8s;
+- Configuring Prometheus and Grafana to collect metrics;
+- Configuring EFK to collect logs
+- Complete tasks with *.
+
+
+## Additional tasks:
+- Launch alert manager:
+  ```yml
+  alertmanagerFiles:
+  alertmanager.yml:
+    global:
+      slack_api_url: 'https://hooks.slack.com/services/123/123/123'
+    route:
+      receiver: 'slack-notifications'
+      routes:
+        - receiver: 'slack-notifications'
+          continue: true
+
+        - receiver: 'email-notifications'
+          continue: true
+
+    receivers:
+      - name: 'slack-notifications'
+        slack_configs:
+        - channel: '#vadim_martynov_gitlab_ci'
+
+      - name: 'email-notifications'
+        email_configs:
+          - to: '{name}@express42.com'
+            from: 'alertalertmanager@gmail.com'
+            smarthost: smtp.gmail.com:587
+            auth_username: 'alertalertmanager@gmail.com'
+            auth_identity: 'alertalertmanager@gmail.com'
+            auth_password: '{secret}'
+  ```
+- Deploy EFK:
+  ```bash
+  cd kubernetes && kubectl apply -f efk
+  helm upgrade --install kibana elastic/kibana \
+  --set "ingress.enabled=true" \
+  --set "ingress.host={reddit-kibana}" \
+  --version 6.5
+  ```
